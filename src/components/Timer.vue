@@ -1,17 +1,51 @@
 <template>
   <div id="timer">
-    {{ timerCount }}
+    {{ timerCountStr }}
   </div>
 </template>
 
 <script>
+  import moment from 'moment';
   export default {
     name: 'Timer',
-    computed: {
-      timerCount: function() {
-        return "10:00";
+    data() {
+      return {
+        nowDate: moment(),
+        timerEndDate: moment().add(30, 'minutes'),
       }
-    }
+    },
+    created: function() {
+      this.initialize();
+    },
+    methods: {
+      initialize: function() {
+        setInterval(function() {this.update()}.bind(this), 100)
+      },
+
+      update: function() {
+        this.nowDate = moment();
+      },
+
+      start: function() {
+        let self = this;
+        this.timerObj = setInterval(function() {self.count()}, 1000)
+        this.timerOn = true; //timerがOFFであることを状態として保持
+      },
+
+      stop: function() {
+        clearInterval(this.timerObj);
+        this.timerOn = false; //timerがOFFであることを状態として保持
+      },
+
+      complete: function() {
+        clearInterval(this.timerObj)
+      }
+    },
+    computed: {
+      timerCountStr: function() {
+        return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
+      }
+    },
   }
 </script>
 
