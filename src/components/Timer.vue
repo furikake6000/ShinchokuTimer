@@ -1,6 +1,9 @@
 <template>
   <div id="timer">
-    {{ timerCountStr }}
+    <div>{{ timerCountStr }}</div>
+    <button v-on:click="start" v-if="!timerObj">Start</button>
+    <button v-on:click="stop" v-if="timerObj">Stop</button>
+    <button v-on:click="initialize(30);">Reset</button>
   </div>
 </template>
 
@@ -11,42 +14,50 @@
     data() {
       return {
         nowDate: moment(),
-        timerEndDate: moment().add(30, 'minutes'),
+        timerEndDate: moment(),
+        timerObj: null,
+        remainTime: null,
       }
     },
     created: function() {
-      this.initialize();
+      this.initialize(30);
     },
     methods: {
-      initialize: function() {
-        setInterval(function() {this.update()}.bind(this), 100)
-      },
-
       update: function() {
         this.nowDate = moment();
       },
 
       start: function() {
-        let self = this;
-        this.timerObj = setInterval(function() {self.count()}, 1000)
-        this.timerOn = true; //timerがOFFであることを状態として保持
+        if (this.timerObj) return;
+
+        this.nowDate = moment();
+        this.timerEndDate = moment().add(this.remainTime);
+        this.timerObj = setInterval(function() {this.update()}.bind(this), 100);
       },
 
       stop: function() {
+        if (!this.timerObj) return;
+
+        this.remainTime = this.timerEndDate.diff(this.nowDate);
         clearInterval(this.timerObj);
-        this.timerOn = false; //timerがOFFであることを状態として保持
+        this.timerObj = null;
       },
 
-      complete: function() {
-        clearInterval(this.timerObj)
-      }
+      initialize: function(minutes) {
+        this.stop();
+        this.remainTime = minutes * 60 * 1000; // milliseconds
+      },
     },
     computed: {
       timerCountStr: function() {
-        if (this.nowDate.isAfter(this.timerEndDate)) {
-          return "0:00";
+        if (this.timerObj){
+          if (this.nowDate.isAfter(this.timerEndDate)) {
+            return "0:00";
+          }
+          return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
+        }else{
+          return moment(this.remainTime).format("m:ss");
         }
-        return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
       }
     },
   }
