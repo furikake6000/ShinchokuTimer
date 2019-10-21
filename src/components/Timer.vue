@@ -1,6 +1,6 @@
 <template>
   <div id="timer">
-    <div>{{ timerCountStr }}</div>
+    <div id="display">{{ timerCountStr }}</div>
     <button v-on:click="start" v-if="!timerObj">Start</button>
     <button v-on:click="stop" v-if="timerObj">Stop</button>
     <button v-on:click="initialize(30);">Reset</button>
@@ -71,5 +71,18 @@
 
   #timer
     font-family: 'Memoir'
-    font-size: 10rem
+
+    #display
+      font-size: 10rem
+
+    button
+      margin: 10px
+      padding: 20px
+      width: 200px
+      height: 200px
+      font-family: 'Memoir'
+      font-size: 2rem
+      color: white
+      background-color: navy
+      border-radius: 50%
 </style>
