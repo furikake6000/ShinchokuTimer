@@ -1,14 +1,27 @@
 <template>
   <div id="timer">
     <div id="display">{{ timerCountStr }}</div>
-    <button v-on:click="start" v-if="!timerObj">Start</button>
-    <button v-on:click="stop" v-if="timerObj">Stop</button>
-    <button v-on:click="initialize(30);">Reset</button>
+    <button class="is-green" v-on:click="start" v-if="!timerObj">
+      <font-awesome-icon icon="play" />
+      Start
+    </button>
+    <button class="is-red" v-on:click="stop" v-if="timerObj">
+      <font-awesome-icon icon="pause" />
+      Stop
+    </button>
+    <button v-on:click="initialize(30);">
+      <font-awesome-icon icon="redo-alt" />
+      Reset
+    </button>
   </div>
 </template>
 
 <script>
   import moment from 'moment';
+  import { library } from '@fortawesome/fontawesome-svg-core'
+  import { faRedoAlt, faPlay, faPause } from '@fortawesome/free-solid-svg-icons'
+ 
+  library.add([faRedoAlt, faPlay, faPause])
   export default {
     name: 'Timer',
     data() {
@@ -83,6 +96,13 @@
       font-family: 'Memoir'
       font-size: 2rem
       color: white
-      background-color: navy
+      background-color: gray
       border-radius: 50%
+      svg
+        padding: 10px
+        font-size: 4rem
+      &.is-red
+        background-color: red
+      &.is-green
+        background-color: green
 </style>
