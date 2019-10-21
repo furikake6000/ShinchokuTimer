@@ -1,12 +1,17 @@
 <template>
   <div id="timer">
-    12:00
+    {{ timerCount }}
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Timer'
+    name: 'Timer',
+    computed: {
+      timerCount: function() {
+        return "10:00";
+      }
+    }
   }
 </script>
 
