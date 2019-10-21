@@ -43,6 +43,9 @@
     },
     computed: {
       timerCountStr: function() {
+        if (this.nowDate.isAfter(this.timerEndDate)) {
+          return "0:00";
+        }
         return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
       }
     },
