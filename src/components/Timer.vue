@@ -13,6 +13,12 @@
       <font-awesome-icon icon="redo-alt" />
       Reset
     </button>
+
+    <br />
+
+    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute);">
+      {{ minute }}min
+    </button>
   </div>
 </template>
 
