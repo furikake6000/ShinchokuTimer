@@ -16,8 +16,8 @@
 
     <br />
 
-    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute);">
-      {{ minute }}min
+    <button class="minutes-button" v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute);">
+      <span class="minutes">{{ minute }}</span>min
     </button>
   </div>
 </template>
@@ -111,6 +111,12 @@
       svg
         padding: 10px
         font-size: 4rem
+      &.minutes-button
+        width: 150px
+        height: 150px
+        font-size: 1.5rem
+        .minutes
+          font-size: 2rem
       &.is-red
         background-color: red
       &.is-green
