@@ -69,14 +69,18 @@
     },
     computed: {
       timerCountStr: function() {
+        var str = "";
         if (this.timerObj){
           if (this.nowDate.isAfter(this.timerEndDate)) {
-            return "0:00";
+            str = "0:00";
           }
-          return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
+          str = moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
         }else{
-          return moment(this.remainTime).format("m:ss");
+          str = moment(this.remainTime).format("m:ss");
         }
+
+        document.title = str;
+        return str;
       }
     },
   }
