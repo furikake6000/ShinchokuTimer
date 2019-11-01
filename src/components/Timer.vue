@@ -1,6 +1,10 @@
 <template>
   <div id="timer">
-    <div id="display">{{ timerCountStr }}</div>
+    <div id="display">
+      <span id="minute">{{ timerCount.minute() }}</span>
+      <span>:</span>
+      <span id="second">{{ ('00' + timerCount.second()).slice(-2) }}</span>
+    </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
       Start
@@ -41,6 +45,9 @@
     created: function() {
       this.initialize(30);
     },
+    updated: function() {
+      document.title = this.timerCount.format("m:ss");
+    },
     methods: {
       update: function() {
         this.nowDate = moment();
@@ -77,11 +84,6 @@
         }else{
           return moment(Math.max(this.remainTime, 0));
         }
-      },
-      timerCountStr: function() {
-        var str = moment(this.timerCount).format("m:ss");
-        document.title = str;
-        return str;
       }
     },
   }
