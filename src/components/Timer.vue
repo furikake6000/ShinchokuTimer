@@ -68,17 +68,18 @@
       },
     },
     computed: {
-      timerCountStr: function() {
-        var str = "";
+      timerCount: function() {
         if (this.timerObj){
           if (this.nowDate.isAfter(this.timerEndDate)) {
-            str = "0:00";
+            return moment(0);
           }
-          str = moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
+          return moment(this.timerEndDate.diff(this.nowDate));
         }else{
-          str = moment(this.remainTime).format("m:ss");
+          return moment(Math.max(this.remainTime, 0));
         }
-
+      },
+      timerCountStr: function() {
+        var str = moment(this.timerCount).format("m:ss");
         document.title = str;
         return str;
       }
