@@ -1,9 +1,11 @@
 <template>
   <div id="timer">
     <div id="display">
-      <span id="minute">{{ timerCount.minute() }}</span>
+      <span id="minute">{{ timerMinuteStr }}</span>
       <span>:</span>
-      <span id="second">{{ ('00' + timerCount.second()).slice(-2) }}</span>
+      <span id="second">{{ timerSecondStr }}</span>
+      <input :value="timerMinuteStr">
+      <input :value="timerSecondStr">
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
@@ -84,6 +86,12 @@
         }else{
           return moment(Math.max(this.remainTime, 0));
         }
+      },
+      timerMinuteStr: function() {
+        return this.timerCount.minute();
+      },
+      timerSecondStr: function() {
+        return ('00' + this.timerCount.second()).slice(-2);
       }
     },
   }
