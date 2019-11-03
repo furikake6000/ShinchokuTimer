@@ -1,6 +1,11 @@
 <template>
   <div id="timer">
-    <div id="display">{{ timerCountStr }}</div>
+    <div id="display">
+      <div class="bar" v-bind:style="{ width: (1.0 - timeNormalized) * 100 + '%' }" />
+      <div class="text">
+        {{ timeStr }}
+      </div>
+    </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
       Start
@@ -9,14 +14,14 @@
       <font-awesome-icon icon="pause" />
       Stop
     </button>
-    <button v-on:click="initialize(30);">
+    <button v-on:click="initialize();">
       <font-awesome-icon icon="redo-alt" />
       Reset
     </button>
 
     <br />
 
-    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute);">
+    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
       {{ minute }}min
     </button>
   </div>
@@ -36,10 +41,11 @@
         timerEndDate: moment(),
         timerObj: null,
         remainTime: null,
+        defaultLimit: null,
       }
     },
     created: function() {
-      this.initialize(30);
+      this.initialize(30 * 60 * 1000);
     },
     methods: {
       update: function() {
@@ -62,22 +68,29 @@
         this.timerObj = null;
       },
 
-      initialize: function(minutes) {
+      initialize: function(limit) {
         this.stop();
-        this.remainTime = minutes * 60 * 1000; // milliseconds
+        this.remainTime = (limit || this.defaultLimit); // milliseconds
+        this.defaultLimit = this.remainTime;
       },
     },
     computed: {
-      timerCountStr: function() {
+      time: function() {
         if (this.timerObj){
           if (this.nowDate.isAfter(this.timerEndDate)) {
-            return "0:00";
+            return 0;
           }
-          return moment(this.timerEndDate.diff(this.nowDate)).format("m:ss");
+          return this.timerEndDate.diff(this.nowDate);
         }else{
-          return moment(this.remainTime).format("m:ss");
+          return this.remainTime;
         }
-      }
+      },
+      timeStr: function() {
+        return moment(this.time).format("m:ss");
+      },
+      timeNormalized: function() {
+        return this.time / this.defaultLimit;
+      },
     },
   }
 </script>
@@ -92,7 +105,21 @@
     font-family: 'Memoir'
 
     #display
+      position: relative
+      background-color: #e8f1ff
       font-size: 10rem
+      line-height: 14rem
+      height: 14rem
+
+      .text
+        position: relative
+
+      .bar
+        position: absolute
+        content: ""
+        background-color: #6294e3
+        left: 0
+        height: 14rem
 
     button
       margin: 10px
