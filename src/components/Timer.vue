@@ -3,7 +3,9 @@
     <div id="display">
       <div class="bar" v-bind:style="{ width: (1.0 - timeNormalized) * 100 + '%' }" />
       <div class="text">
-        {{ timeStr }}
+        <span id="minute" @click="enableMinuteEdit">{{ timerMinuteStr }}<input id="minuteEditor" type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)" @blur="disableMinuteEdit" @keydown.enter="disableMinuteEdit" v-if="isMinuteEditing"></span>
+        <span>:</span>
+        <span id="second" @click="enableSecondEdit">{{ timerSecondStr }}<input id="secondEditor" type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)" @blur="disableSecondEdit" @keydown.enter="disableSecondEdit" v-if="isSecondEditing"></span>
       </div>
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
@@ -41,11 +43,16 @@
         timerEndDate: moment(),
         timerObj: null,
         remainTime: null,
+        isMinuteEditing: false,
+        isSecondEditing: false,
         defaultLimit: null,
       }
     },
     created: function() {
       this.initialize(30 * 60 * 1000);
+    },
+    updated: function() {
+      document.title = this.timerCount.format("m:ss");
     },
     methods: {
       update: function() {
@@ -74,6 +81,38 @@
         this.remainTime = (limit || this.defaultLimit); // milliseconds
         this.defaultLimit = this.remainTime;
       },
+
+      setMinute: function(minutes) {
+        this.stop();
+        var currentCount = moment(this.remainTime);
+        currentCount.set('minute', parseInt(minutes,10));
+        this.remainTime = currentCount.valueOf();
+      },
+
+      setSecond: function(seconds) {
+        this.stop();
+        var currentCount = moment(this.remainTime);
+        currentCount.set('second', parseInt(seconds, 10));
+        this.remainTime = currentCount.valueOf();
+      },
+
+      enableMinuteEdit: function() {
+        this.isMinuteEditing = true;
+        // v-ifで表示されるのを待機するため、10ミリ秒遅延
+        setTimeout(function() {document.getElementById('minuteEditor').focus()}, 10);
+      },
+      disableMinuteEdit: function() {
+        this.isMinuteEditing = false;
+      },
+
+      enableSecondEdit: function() {
+        this.isSecondEditing = true;
+        // v-ifで表示されるのを待機するため、10ミリ秒遅延
+        setTimeout(function() {document.getElementById('secondEditor').focus()}, 10);
+      },
+      disableSecondEdit: function() {
+        this.isSecondEditing = false;
+      },
     },
     computed: {
       time: function() {
@@ -88,6 +127,12 @@
       },
       timeStr: function() {
         return moment(this.time).format("m:ss");
+      },
+      timerMinuteStr: function() {
+        return moment(this.time).minute();
+      },
+      timerSecondStr: function() {
+        return ('00' + moment(this.time).second()).slice(-2);
       },
       timeNormalized: function() {
         return this.time / this.defaultLimit;
@@ -114,6 +159,18 @@
 
       .text
         position: relative
+        span
+        position: relative
+        input[type="tel"]
+          position: absolute
+          left: 0
+          top: 0
+          font-family: 'Memoir'
+          font-size: 6rem
+          text-align: center
+          min-width: 6rem
+          width: 100%
+          height: 100%
 
       .bar
         position: absolute
