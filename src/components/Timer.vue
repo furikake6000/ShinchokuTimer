@@ -146,6 +146,7 @@
           position: absolute
           left: 0
           top: 0
+          font-family: 'Memoir'
           font-size: 6rem
           text-align: center
           min-width: 6rem
