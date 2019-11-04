@@ -158,7 +158,6 @@
       height: 14rem
 
       .text
-        position: relative
         span
         position: relative
         input[type="tel"]
