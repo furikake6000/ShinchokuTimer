@@ -85,14 +85,14 @@
         this.stop();
         var currentCount = moment(this.remainTime);
         currentCount.set('minute', parseInt(minutes,10));
-        this.remainTime = currentCount.valueOf();
+        this.initialize(currentCount.valueOf());
       },
 
       setSecond: function(seconds) {
         this.stop();
         var currentCount = moment(this.remainTime);
         currentCount.set('second', parseInt(seconds, 10));
-        this.remainTime = currentCount.valueOf();
+        this.initialize(currentCount.valueOf());
       },
 
       enableMinuteEdit: function() {
