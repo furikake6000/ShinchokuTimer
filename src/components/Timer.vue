@@ -52,12 +52,11 @@
       this.initialize(30 * 60 * 1000);
     },
     updated: function() {
-      document.title = this.timerCount.format("m:ss");
+      document.title = this.timeStr;
     },
     methods: {
       update: function() {
         this.nowDate = moment();
-        document.title = this.timeStr;
       },
 
       start: function() {
@@ -122,7 +121,7 @@
           }
           return this.timerEndDate.diff(this.nowDate);
         }else{
-          return this.remainTime;
+          return Math.max(this.remainTime, 0);
         }
       },
       timeStr: function() {
@@ -159,17 +158,17 @@
 
       .text
         span
-        position: relative
-        input[type="tel"]
-          position: absolute
-          left: 0
-          top: 0
-          font-family: 'Memoir'
-          font-size: 6rem
-          text-align: center
-          min-width: 6rem
-          width: 100%
-          height: 100%
+          position: relative
+          input[type="tel"]
+            position: absolute
+            left: 0
+            top: 0
+            font-family: 'Memoir'
+            font-size: 6rem
+            text-align: center
+            min-width: 6rem
+            width: 100%
+            height: 100%
 
       .bar
         position: absolute
