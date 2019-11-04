@@ -144,6 +144,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='sass'>
+  @import "../../node_modules/bulma/bulma.sass"
+
   @font-face
     font-family: 'Memoir'
     src: url('../assets/memoir-square.otf') format('truetype')
@@ -157,6 +159,10 @@
       font-size: 10rem
       line-height: 14rem
       height: 14rem
+      @include mobile
+        font-size: calc(4rem + 10vw)
+        line-height: calc(5.6rem + 14vw)
+        height: calc(5.6rem + 14vw)
 
       .text
         span
@@ -178,6 +184,8 @@
         background-color: #6294e3
         left: 0
         height: 14rem
+        @include mobile
+          height: calc(5.6rem + 14vw)
 
     button
       margin: 10px

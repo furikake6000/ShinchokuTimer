@@ -18,6 +18,13 @@ export default {
 <style lang="scss">
 @import "../node_modules/bulma/bulma.sass";
 
+html {
+  font-size: 100%;
+  @include mobile {
+    font-size: calc(60% + 1.2vw);
+  }
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
