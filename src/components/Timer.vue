@@ -84,7 +84,9 @@
       setMinute: function(minutes) {
         this.stop();
         var currentCount = moment(this.remainTime);
-        currentCount.set('minute', parseInt(minutes,10));
+        currentCount.set('day', moment(0).get('day'));
+        currentCount.set('hour', moment(0).get('hour'));
+        currentCount.set('minute', Math.min(parseInt(minutes,10), 999));
         this.initialize(currentCount.valueOf());
       },
 
@@ -125,10 +127,10 @@
         }
       },
       timeStr: function() {
-        return moment(this.time).format("m:ss");
+        return this.timerMinuteStr + ':' + this.timerSecondStr;
       },
       timerMinuteStr: function() {
-        return moment(this.time).minute();
+        return Math.floor(moment(this.time).valueOf() / 60000);
       },
       timerSecondStr: function() {
         return ('00' + moment(this.time).second()).slice(-2);
