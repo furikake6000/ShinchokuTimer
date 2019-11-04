@@ -4,8 +4,8 @@
       <span id="minute">{{ timerMinuteStr }}</span>
       <span>:</span>
       <span id="second">{{ timerSecondStr }}</span>
-      <input :value="timerMinuteStr">
-      <input :value="timerSecondStr">
+      <input :value="timerMinuteStr" @input="setMinute($event.target.value)">
+      <input :value="timerSecondStr" @input="setSecond($event.target.value)">
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
@@ -74,6 +74,20 @@
       initialize: function(minutes) {
         this.stop();
         this.remainTime = minutes * 60 * 1000; // milliseconds
+      },
+
+      setMinute: function(minutes) {
+        this.stop();
+        var currentCount = moment(this.remainTime);
+        currentCount.set('minute', parseInt(minutes,10));
+        this.remainTime = currentCount.valueOf();
+      },
+
+      setSecond: function(seconds) {
+        this.stop();
+        var currentCount = moment(this.remainTime);
+        currentCount.set('second', parseInt(seconds, 10));
+        this.remainTime = currentCount.valueOf();
       },
     },
     computed: {
