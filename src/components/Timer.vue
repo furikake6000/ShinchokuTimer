@@ -1,11 +1,9 @@
 <template>
   <div id="timer">
     <div id="display">
-      <span id="minute">{{ timerMinuteStr }}</span>
+      <span id="minute">{{ timerMinuteStr }}<input type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)"></span>
       <span>:</span>
-      <span id="second">{{ timerSecondStr }}</span>
-      <input type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)">
-      <input type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)">
+      <span id="second">{{ timerSecondStr }}<input type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)"></span>
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
@@ -122,6 +120,17 @@
 
     #display
       font-size: 10rem
+      span
+        position: relative
+        input[type="tel"]
+          position: absolute
+          left: 0
+          top: 0
+          font-size: 6rem
+          text-align: center
+          min-width: 6rem
+          width: 100%
+          height: 100%
 
     button
       margin: 10px
