@@ -57,7 +57,7 @@
     methods: {
       update: function() {
         this.nowDate = moment();
-        document.title = this.timeStr();
+        document.title = this.timeStr;
       },
 
       start: function() {
