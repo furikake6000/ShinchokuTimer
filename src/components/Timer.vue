@@ -1,9 +1,9 @@
 <template>
   <div id="timer">
     <div id="display">
-      <span id="minute">{{ timerMinuteStr }}<input type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)"></span>
+      <span id="minute" @click="enableMinuteEdit">{{ timerMinuteStr }}<input id="minuteEditor" type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)" @blur="disableMinuteEdit" @keydown.enter="disableMinuteEdit" v-if="isMinuteEditing"></span>
       <span>:</span>
-      <span id="second">{{ timerSecondStr }}<input type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)"></span>
+      <span id="second" @click="enableSecondEdit">{{ timerSecondStr }}<input id="secondEditor" type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)" @blur="disableSecondEdit" @keydown.enter="disableSecondEdit" v-if="isSecondEditing"></span>
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
@@ -40,6 +40,8 @@
         timerEndDate: moment(),
         timerObj: null,
         remainTime: null,
+        isMinuteEditing: false,
+        isSecondEditing: false,
       }
     },
     created: function() {
@@ -86,6 +88,24 @@
         var currentCount = moment(this.remainTime);
         currentCount.set('second', parseInt(seconds, 10));
         this.remainTime = currentCount.valueOf();
+      },
+
+      enableMinuteEdit: function() {
+        this.isMinuteEditing = true;
+        // v-ifで表示されるのを待機するため、10ミリ秒遅延
+        setTimeout(function() {document.getElementById('minuteEditor').focus()}, 10);
+      },
+      disableMinuteEdit: function() {
+        this.isMinuteEditing = false;
+      },
+
+      enableSecondEdit: function() {
+        this.isSecondEditing = true;
+        // v-ifで表示されるのを待機するため、10ミリ秒遅延
+        setTimeout(function() {document.getElementById('secondEditor').focus()}, 10);
+      },
+      disableSecondEdit: function() {
+        this.isSecondEditing = false;
       },
     },
     computed: {
