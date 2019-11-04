@@ -4,8 +4,8 @@
       <span id="minute">{{ timerMinuteStr }}</span>
       <span>:</span>
       <span id="second">{{ timerSecondStr }}</span>
-      <input :value="timerMinuteStr" @input="setMinute($event.target.value)">
-      <input :value="timerSecondStr" @input="setSecond($event.target.value)">
+      <input type="tel" :value="timerMinuteStr" @input="setMinute($event.target.value)">
+      <input type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)">
     </div>
     <button class="is-green" v-on:click="start" v-if="!timerObj">
       <font-awesome-icon icon="play" />
