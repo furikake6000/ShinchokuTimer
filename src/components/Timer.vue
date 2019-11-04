@@ -52,12 +52,11 @@
       this.initialize(30 * 60 * 1000);
     },
     updated: function() {
-      document.title = this.timerCount.format("m:ss");
+      document.title = this.timeStr;
     },
     methods: {
       update: function() {
         this.nowDate = moment();
-        document.title = this.timeStr();
       },
 
       start: function() {
@@ -85,15 +84,17 @@
       setMinute: function(minutes) {
         this.stop();
         var currentCount = moment(this.remainTime);
-        currentCount.set('minute', parseInt(minutes,10));
-        this.remainTime = currentCount.valueOf();
+        currentCount.set('day', moment(0).get('day'));
+        currentCount.set('hour', moment(0).get('hour'));
+        currentCount.set('minute', Math.min(parseInt(minutes,10), 999));
+        this.initialize(currentCount.valueOf());
       },
 
       setSecond: function(seconds) {
         this.stop();
         var currentCount = moment(this.remainTime);
         currentCount.set('second', parseInt(seconds, 10));
-        this.remainTime = currentCount.valueOf();
+        this.initialize(currentCount.valueOf());
       },
 
       enableMinuteEdit: function() {
@@ -122,14 +123,14 @@
           }
           return this.timerEndDate.diff(this.nowDate);
         }else{
-          return this.remainTime;
+          return Math.max(this.remainTime, 0);
         }
       },
       timeStr: function() {
-        return moment(this.time).format("m:ss");
+        return this.timerMinuteStr + ':' + this.timerSecondStr;
       },
       timerMinuteStr: function() {
-        return moment(this.time).minute();
+        return Math.floor(moment(this.time).valueOf() / 60000);
       },
       timerSecondStr: function() {
         return ('00' + moment(this.time).second()).slice(-2);
@@ -158,19 +159,18 @@
       height: 14rem
 
       .text
-        position: relative
         span
-        position: relative
-        input[type="tel"]
-          position: absolute
-          left: 0
-          top: 0
-          font-family: 'Memoir'
-          font-size: 6rem
-          text-align: center
-          min-width: 6rem
-          width: 100%
-          height: 100%
+          position: relative
+          input[type="tel"]
+            position: absolute
+            left: 0
+            top: 0
+            font-family: 'Memoir'
+            font-size: 6rem
+            text-align: center
+            min-width: 6rem
+            width: 100%
+            height: 100%
 
       .bar
         position: absolute
