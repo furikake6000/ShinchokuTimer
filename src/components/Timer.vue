@@ -28,6 +28,10 @@
           <span class="minutes">{{ minute }}</span><br/>
           min
         </button>
+        <button class="button-minutes only-fullhd" v-for="minute in [90, 120]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
+          <span class="minutes">{{ minute }}</span><br/>
+          min
+        </button>
       </div>
     </div>
   </div>
@@ -160,13 +164,6 @@
     #display
       position: relative
       background-color: #EBF1F2
-      font-size: 10rem
-      line-height: 14rem
-      height: 14rem
-      @include mobile
-        font-size: calc(4rem + 10vw)
-        line-height: calc(5.6rem + 14vw)
-        height: calc(5.6rem + 14vw)
 
       .text
         color: #644013
@@ -188,7 +185,7 @@
         content: ""
         background-color: #F29B30
         left: 0
-        height: 14rem
+        height: 100%
         @include mobile
           height: calc(5.6rem + 14vw)
 
@@ -199,45 +196,95 @@
       #mainControl
         display: flex
         justify-content: space-between
-        width: 540px
-        height: 260px
       #minutesControl
         display: flex
         flex-wrap: wrap
         justify-content: space-between
         align-content: space-between
-        width: 400px
-        height: 260px
 
     button
-      border-style: none
-
-    button.button-huge
-      width: 260px
-      height: 260px
       font-family: 'Memoir'
-      font-size: 40px
+      border-style: none
       color: #644013
       background-color: #F2D06B
-      border-radius: 50%
-      svg
-        padding: 10px
-        font-size: 120px
       &.is-red
         color: white
         background-color: #E74747
       &.is-green
         color: white
         background-color: #00CE33
+    
+    button.button-huge
+      border-radius: 50%
 
     button.button-minutes
-      width: 120px
-      height: 120px
-      font-family: 'Memoir'
-      font-size: 24px
-      background-color: #F2D06B
-      color: #644013
       border-radius: 25%
-      .minutes
-        font-size: 56px
+
+    // responsive layout
+    +desktop
+      #display
+        font-size: 10rem
+        line-height: 14rem
+        height: 14rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        #mainControl
+          width: 540px
+          height: 260px
+        #minutesControl
+          width: 400px
+          height: 260px
+      button.button-huge
+        width: 260px
+        height: 260px
+        font-size: 40px
+        svg
+          padding: 10px
+          font-size: 120px
+      button.button-minutes
+        width: 120px
+        height: 120px
+        font-size: 24px
+        .minutes
+          font-size: 56px
+
+    +widescreen
+      #display
+        font-size: 12rem
+        line-height: 16rem
+        height: 16rem
+        .text span input[type="tel"]
+          font-size: 8rem
+          min-width: 8rem
+      #controlPanel
+        #mainControl
+          width: 648px
+          height: 314px
+        #minutesControl
+          width: 481px
+          height: 314px
+      button.button-huge
+        width: 314px
+        height: 314px
+        font-size: 50px
+        svg
+          padding: 10px
+          font-size: 140px
+      button.button-minutes
+        width: 147px
+        height: 147px
+        font-size: 32px
+        .minutes
+          font-size: 60px
+
+    @include until($fullhd)
+      .only-fullhd
+        display: none
+    +fullhd
+      #controlPanel
+        #minutesControl
+          width: 648px
+
 </style>
