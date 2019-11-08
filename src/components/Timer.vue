@@ -8,25 +8,28 @@
         <span id="second" @click="enableSecondEdit">{{ timerSecondStr }}<input id="secondEditor" type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)" @blur="disableSecondEdit" @keydown.enter="disableSecondEdit" v-if="isSecondEditing"></span>
       </div>
     </div>
-    <button class="button-huge is-green" v-on:click="start" v-if="!timerObj">
-      <font-awesome-icon icon="play" /><br/>
-      Start
-    </button>
-    <button class="button-huge is-red" v-on:click="stop" v-if="timerObj">
-      <font-awesome-icon icon="pause" /><br/>
-      Stop
-    </button>
-    <button class="button-huge" v-on:click="initialize();">
-      <font-awesome-icon icon="redo-alt" /><br/>
-      Reset
-    </button>
-
-    <br />
-
-    <button class="button-minutes" v-for="minute in [1, 3, 5, 10, 30, 60]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
-      <span class="minutes">{{ minute }}</span><br/>
-      min
-    </button>
+    <div id="controlPanel">
+      <div id="mainControl">
+        <button class="button-huge is-green" v-on:click="start" v-if="!timerObj">
+          <font-awesome-icon icon="play" /><br/>
+          Start
+        </button>
+        <button class="button-huge is-red" v-on:click="stop" v-if="timerObj">
+          <font-awesome-icon icon="pause" /><br/>
+          Stop
+        </button>
+        <button class="button-huge" v-on:click="initialize();">
+          <font-awesome-icon icon="redo-alt" /><br/>
+          Reset
+        </button>
+      </div>
+      <div id="minutesControl">
+        <button class="button-minutes" v-for="minute in [1, 3, 5, 10, 30, 60]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
+          <span class="minutes">{{ minute }}</span><br/>
+          min
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -156,7 +159,7 @@
 
     #display
       position: relative
-      background-color: #e8f1ff
+      background-color: #EBF1F2
       font-size: 10rem
       line-height: 14rem
       height: 14rem
@@ -166,6 +169,7 @@
         height: calc(5.6rem + 14vw)
 
       .text
+        color: #644013
         span
           position: relative
           input[type="tel"]
@@ -182,11 +186,28 @@
       .bar
         position: absolute
         content: ""
-        background-color: #6294e3
+        background-color: #F29B30
         left: 0
         height: 14rem
         @include mobile
           height: calc(5.6rem + 14vw)
+
+    #controlPanel
+      margin-top: 20px
+      display: flex
+      justify-content: space-between
+      #mainControl
+        display: flex
+        justify-content: space-between
+        width: 540px
+        height: 260px
+      #minutesControl
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        align-content: space-between
+        width: 400px
+        height: 260px
 
     button
       border-style: none
