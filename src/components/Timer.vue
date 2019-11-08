@@ -186,8 +186,6 @@
         background-color: #F29B30
         left: 0
         height: 100%
-        @include mobile
-          height: calc(5.6rem + 14vw)
 
     #controlPanel
       margin-top: 20px
@@ -221,6 +219,35 @@
       border-radius: 25%
 
     // responsive layout
+    +touch
+      #display
+        font-size: 7rem
+        line-height: 10rem
+        height: 10rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        display: block
+        #mainControl
+          justify-content: space-around
+        #minutesControl
+          margin: 4vw 2vw
+          height: 64vw
+      button.button-huge
+        width: 40vw
+        height: 40vw
+        font-size: 2rem
+        svg
+          padding: 10px
+          font-size: 7rem
+      button.button-minutes
+        width: 30vw
+        height: 30vw
+        font-size: 2rem
+        .minutes
+          font-size: 5rem
+
     +desktop
       #display
         font-size: 10rem

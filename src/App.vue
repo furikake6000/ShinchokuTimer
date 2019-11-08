@@ -20,8 +20,8 @@ export default {
 
 html {
   font-size: 100%;
-  @include mobile {
-    font-size: calc(60% + 1.2vw);
+  @include touch {
+    font-size: calc(20% + 2vw);
   }
 }
 
