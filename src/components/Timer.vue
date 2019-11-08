@@ -219,7 +219,7 @@
       border-radius: 25%
 
     // responsive layout
-    +touch
+    +mobile
       #display
         font-size: 7rem
         line-height: 10rem
@@ -247,6 +247,37 @@
         font-size: 2rem
         .minutes
           font-size: 5rem
+
+    +tablet-only
+      #display
+        font-size: 7rem
+        line-height: 10rem
+        height: 10rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        #mainControl
+          width: 51.5vw
+          margin-left: 2vw
+          height: 25.5vw
+        #minutesControl
+          width: 40vw
+          margin-right: 2vw
+          height: 25.5vw
+      button.button-huge
+        width: 25vw
+        height: 25vw
+        font-size: 1.5rem
+        svg
+          padding: 10px
+          font-size: 5rem
+      button.button-minutes
+        width: 12vw
+        height: 12vw
+        font-size: 1rem
+        .minutes
+          font-size: 2.5rem
 
     +desktop
       #display
