@@ -8,23 +8,24 @@
         <span id="second" @click="enableSecondEdit">{{ timerSecondStr }}<input id="secondEditor" type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)" @blur="disableSecondEdit" @keydown.enter="disableSecondEdit" v-if="isSecondEditing"></span>
       </div>
     </div>
-    <button class="is-green" v-on:click="start" v-if="!timerObj">
-      <font-awesome-icon icon="play" />
+    <button class="button-huge is-green" v-on:click="start" v-if="!timerObj">
+      <font-awesome-icon icon="play" /><br/>
       Start
     </button>
-    <button class="is-red" v-on:click="stop" v-if="timerObj">
-      <font-awesome-icon icon="pause" />
+    <button class="button-huge is-red" v-on:click="stop" v-if="timerObj">
+      <font-awesome-icon icon="pause" /><br/>
       Stop
     </button>
-    <button v-on:click="initialize();">
-      <font-awesome-icon icon="redo-alt" />
+    <button class="button-huge" v-on:click="initialize();">
+      <font-awesome-icon icon="redo-alt" /><br/>
       Reset
     </button>
 
     <br />
 
-    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
-      <span class="minutes">{{ minute }}</span>min
+    <button class="button-minutes" v-for="minute in [1, 3, 5, 10, 30, 60]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
+      <span class="minutes">{{ minute }}</span><br/>
+      min
     </button>
   </div>
 </template>
@@ -188,26 +189,34 @@
           height: calc(5.6rem + 14vw)
 
     button
-      margin: 10px
-      padding: 20px
-      width: 200px
-      height: 200px
+      border-style: none
+
+    button.button-huge
+      width: 260px
+      height: 260px
       font-family: 'Memoir'
-      font-size: 2rem
-      color: white
-      background-color: gray
+      font-size: 40px
+      color: #644013
+      background-color: #F2D06B
       border-radius: 50%
       svg
         padding: 10px
-        font-size: 4rem
-      &.minutes-button
-        width: 150px
-        height: 150px
-        font-size: 1.5rem
-        .minutes
-          font-size: 2rem
+        font-size: 120px
       &.is-red
-        background-color: red
+        color: white
+        background-color: #E74747
       &.is-green
-        background-color: green
+        color: white
+        background-color: #00CE33
+
+    button.button-minutes
+      width: 120px
+      height: 120px
+      font-family: 'Memoir'
+      font-size: 24px
+      background-color: #F2D06B
+      color: #644013
+      border-radius: 25%
+      .minutes
+        font-size: 56px
 </style>
