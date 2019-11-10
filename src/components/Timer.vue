@@ -8,24 +8,32 @@
         <span id="second" @click="enableSecondEdit">{{ timerSecondStr }}<input id="secondEditor" type="tel" :value="timerSecondStr" @input="setSecond($event.target.value)" @blur="disableSecondEdit" @keydown.enter="disableSecondEdit" v-if="isSecondEditing"></span>
       </div>
     </div>
-    <button class="is-green" v-on:click="start" v-if="!timerObj">
-      <font-awesome-icon icon="play" />
-      Start
-    </button>
-    <button class="is-red" v-on:click="stop" v-if="timerObj">
-      <font-awesome-icon icon="pause" />
-      Stop
-    </button>
-    <button v-on:click="initialize();">
-      <font-awesome-icon icon="redo-alt" />
-      Reset
-    </button>
-
-    <br />
-
-    <button v-for="minute in [1, 3, 5, 10, 30]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
-      <span class="minutes">{{ minute }}</span>min
-    </button>
+    <div id="controlPanel">
+      <div id="mainControl">
+        <button class="button-huge is-green" v-on:click="start" v-if="!timerObj">
+          <font-awesome-icon icon="play" /><br/>
+          Start
+        </button>
+        <button class="button-huge is-red" v-on:click="stop" v-if="timerObj">
+          <font-awesome-icon icon="pause" /><br/>
+          Stop
+        </button>
+        <button class="button-huge" v-on:click="initialize();">
+          <font-awesome-icon icon="redo-alt" /><br/>
+          Reset
+        </button>
+      </div>
+      <div id="minutesControl">
+        <button class="button-minutes" v-for="minute in [1, 3, 5, 10, 30, 60]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
+          <span class="minutes">{{ minute }}</span><br/>
+          min
+        </button>
+        <button class="button-minutes only-fullhd" v-for="minute in [90, 120]" v-bind:key="minute" v-on:click="initialize(minute * 60 * 1000);">
+          <span class="minutes">{{ minute }}</span><br/>
+          min
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -144,21 +152,23 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='sass'>
+  @import "../../node_modules/bulma/bulma.sass"
+
   @font-face
     font-family: 'Memoir'
     src: url('../assets/memoir-square.otf') format('truetype')
+  
+  $tablet: 568px
 
   #timer
     font-family: 'Memoir'
 
     #display
       position: relative
-      background-color: #e8f1ff
-      font-size: 10rem
-      line-height: 14rem
-      height: 14rem
+      background-color: #EBF1F2
 
       .text
+        color: #644013
         span
           position: relative
           input[type="tel"]
@@ -175,31 +185,166 @@
       .bar
         position: absolute
         content: ""
-        background-color: #6294e3
+        background-color: #F29B30
         left: 0
-        height: 14rem
+        height: 100%
+
+    #controlPanel
+      margin-top: 20px
+      display: flex
+      justify-content: space-between
+      #mainControl
+        display: flex
+        justify-content: space-between
+      #minutesControl
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        align-content: space-between
 
     button
-      margin: 10px
-      padding: 20px
-      width: 200px
-      height: 200px
       font-family: 'Memoir'
-      font-size: 2rem
-      color: white
-      background-color: gray
-      border-radius: 50%
-      svg
-        padding: 10px
-        font-size: 4rem
-      &.minutes-button
-        width: 150px
-        height: 150px
-        font-size: 1.5rem
-        .minutes
-          font-size: 2rem
+      border-style: none
+      color: #644013
+      background-color: #F2D06B
       &.is-red
-        background-color: red
+        color: white
+        background-color: #E74747
       &.is-green
-        background-color: green
+        color: white
+        background-color: #00CE33
+    
+    button.button-huge
+      border-radius: 50%
+
+    button.button-minutes
+      border-radius: 25%
+
+    // responsive layout
+    +mobile
+      #display
+        font-size: 7rem
+        line-height: 10rem
+        height: 10rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        display: block
+        #mainControl
+          justify-content: space-around
+        #minutesControl
+          margin: 4vw 2vw
+          height: 64vw
+      button.button-huge
+        width: 40vw
+        height: 40vw
+        font-size: 2rem
+        svg
+          padding: 10px
+          font-size: 7rem
+      button.button-minutes
+        width: 30vw
+        height: 30vw
+        font-size: 2rem
+        .minutes
+          font-size: 5rem
+
+    +tablet-only
+      #display
+        font-size: 7rem
+        line-height: 10rem
+        height: 10rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        #mainControl
+          width: 51.5vw
+          margin-left: 2vw
+          height: 25.5vw
+        #minutesControl
+          width: 40vw
+          margin-right: 2vw
+          height: 25.5vw
+      button.button-huge
+        width: 25vw
+        height: 25vw
+        font-size: 1.5rem
+        svg
+          padding: 10px
+          font-size: 5rem
+      button.button-minutes
+        width: 12vw
+        height: 12vw
+        font-size: 1rem
+        .minutes
+          font-size: 2.5rem
+
+    +desktop
+      #display
+        font-size: 10rem
+        line-height: 14rem
+        height: 14rem
+        .text span input[type="tel"]
+          font-size: 6rem
+          min-width: 6rem
+      #controlPanel
+        #mainControl
+          width: 540px
+          height: 260px
+        #minutesControl
+          width: 400px
+          height: 260px
+      button.button-huge
+        width: 260px
+        height: 260px
+        font-size: 40px
+        svg
+          padding: 10px
+          font-size: 120px
+      button.button-minutes
+        width: 120px
+        height: 120px
+        font-size: 24px
+        .minutes
+          font-size: 56px
+
+    +widescreen
+      #display
+        font-size: 12rem
+        line-height: 16rem
+        height: 16rem
+        .text span input[type="tel"]
+          font-size: 8rem
+          min-width: 8rem
+      #controlPanel
+        #mainControl
+          width: 648px
+          height: 314px
+        #minutesControl
+          width: 481px
+          height: 314px
+      button.button-huge
+        width: 314px
+        height: 314px
+        font-size: 50px
+        svg
+          padding: 10px
+          font-size: 140px
+      button.button-minutes
+        width: 147px
+        height: 147px
+        font-size: 32px
+        .minutes
+          font-size: 60px
+
+    @include until($fullhd)
+      .only-fullhd
+        display: none
+    +fullhd
+      #controlPanel
+        #minutesControl
+          width: 648px
+
 </style>
