@@ -157,6 +157,8 @@
   @font-face
     font-family: 'Memoir'
     src: url('../assets/memoir-square.otf') format('truetype')
+  
+  $tablet: 568px
 
   #timer
     font-family: 'Memoir'
