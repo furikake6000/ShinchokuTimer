@@ -1,13 +1,29 @@
 <template>
   <div id="topMenu">
-    <a @click="login" class="blockbtn btn-twitter">
-      <p class="text-medium">Twitterで</p>
-      <p class="text-xlarge">ログイン</p>
-      <p class="text-desc">タップするとポップアップが開きます</p>
-    </a>
-    <a class="blockbtn">
-      <p class="text-large">使い方</p>
-    </a>
+    <div v-if="user.uid">
+      <a class="blockbtn btn-primary">
+        <p class="text-large">やること登録</p>
+      </a>
+      <a class="blockbtn btn-primary">
+        <p class="text-large">やること実行</p>
+      </a>
+      <a class="blockbtn">
+        <p class="text-medium">記録を見る</p>
+      </a>
+      <a @click="logout" class="blockbtn">
+        <p class="text-medium">ログアウト</p>
+      </a>
+    </div>
+    <div v-else>
+      <a @click="login" class="blockbtn btn-twitter">
+        <p class="text-medium">Twitterで</p>
+        <p class="text-xlarge">ログイン</p>
+        <p class="text-desc">タップするとポップアップが開きます</p>
+      </a>
+      <a class="blockbtn">
+        <p class="text-medium">使い方</p>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -39,12 +55,14 @@ export default {
 </script>
 
 <style scoped lang='sass'>
+#topMenu
+  margin-bottom: 3rem
 .blockbtn
   display: block
   color: white
   background-color: #959595
-  margin: 1.5rem 0
-  padding: 1.5rem 0
+  margin: 1rem 0
+  padding: 1rem 0
   p
     margin: 0
     line-height: 130%
@@ -62,4 +80,7 @@ export default {
 
 .btn-twitter
   background-color: #1DA1F2
+
+.btn-primary
+  background-color: #4CC72A
 </style>
