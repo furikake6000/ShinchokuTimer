@@ -1,21 +1,13 @@
 <template>
   <div id="app" class="container">
-    <Timer />
-    <TwitterAuthBtn />
+    <RouterView />
   </div>
 </template>
 
 <script>
-import Timer from './components/Timer.vue';
-import TwitterAuthBtn from './components/TwitterAuthBtn.vue';
-
 export default {
-  name: 'app',
-  components: {
-    Timer,
-    TwitterAuthBtn
-  }
-}
+  name: 'app'
+};
 </script>
 
 <style lang="scss">
