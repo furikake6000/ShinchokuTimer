@@ -14,10 +14,10 @@ export default {
 <style scoped lang='sass'>
 #logo
   font-weight: bold
-  margin-top: 6rem
+  margin-top: 4rem
   .maintext
-    font-size: 4.5rem
-    margin-top: -0.4rem
+    font-size: 5rem
+    margin-top: -1rem
   .subtext
-    font-size: 2.25rem
+    font-size: 2.5rem
 </style>
