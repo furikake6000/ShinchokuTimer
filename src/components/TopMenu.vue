@@ -63,6 +63,8 @@ export default {
   background-color: #959595
   margin: 1rem 0
   padding: 1rem 0
+  text-decoration: none
+  cursor: pointer
   p
     margin: 0
     line-height: 130%
