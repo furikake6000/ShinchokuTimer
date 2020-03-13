@@ -1,7 +1,7 @@
 <template>
   <div id="topMenu">
     <div v-if="user.uid">
-      <a class="blockbtn btn-primary">
+      <a href="/task/create" class="blockbtn btn-primary">
         <p class="text-large">やること登録</p>
       </a>
       <a class="blockbtn btn-primary">
