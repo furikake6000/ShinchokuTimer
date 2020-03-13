@@ -17,7 +17,7 @@
     <div v-else>
       <a @click="login" class="blockbtn btn-twitter">
         <p class="text-medium">Twitterで</p>
-        <p class="text-xlarge">ログイン</p>
+        <p class="text-large">ログイン</p>
         <p class="text-desc">タップするとポップアップが開きます</p>
       </a>
       <a class="blockbtn">
@@ -66,9 +66,6 @@ export default {
   p
     margin: 0
     line-height: 130%
-  .text-xlarge
-    font-weight: bold
-    font-size: 3rem
   .text-large
     font-weight: bold
     font-size: 2.25rem
