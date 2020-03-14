@@ -2,13 +2,13 @@
   <div id="taskCreate">
     <h1>やること登録</h1>
 
-    <form method="post">
+    <form>
       <div class="task-create-form">
         <div class="text-align-left">
           <p><span class="text-large">私は、</span>帰ったら</p>
-          <input type="text" name="name" placeholder="絵を描く / 筋トレ etc...">
+          <input type="text" name="name" v-model="name" placeholder="絵を描く / 筋トレ etc...">
           <p>に</p>
-          <select name="length">
+          <select name="period" v-model="period">
             <option value="5">5分間</option>
             <option value="10">10分間</option>
             <option value="15">15分間</option>
@@ -25,7 +25,7 @@
         <p class="text-large">今すぐやる</p>
         <p class="text-desc">ここをタップしてタイマーを起動</p>
       </a>
-      <a class="blockbtn btn-primary">
+      <a @click="postTaskAndGotoTop()" class="blockbtn btn-primary">
         <p class="text-large">帰ったらやる</p>
         <p class="text-desc">ここをタップして予定を登録</p>
       </a>
@@ -37,9 +37,37 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 
 export default {
-  name: 'TaskCreate'
+  name: 'TaskCreate',
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.user = user || {};
+    });
+  },
+  data() {
+    return {
+      user: {},
+      name: '',
+      period: 30
+    };
+  },
+  methods: {
+    postTaskAndGotoTop() {
+      this.postTask();
+      this.$router.push('/');
+    },
+    postTask() {
+      if(this.name.length){
+        firebase.database().ref(`users/${this.user.uid}/tasks`).push({
+          name: this.name,
+          period: this.period,
+          createdAt: Date.now()
+        });
+      }
+    }
+  }
 };
 </script>
 
