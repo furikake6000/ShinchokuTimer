@@ -1,5 +1,5 @@
 <template>
-  <div id="taskCreate">
+  <div id="tasksCreate">
     <h1>やること登録</h1>
 
     <form>
@@ -40,7 +40,7 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'TaskCreate',
+  name: 'TasksCreate',
   created() {
     firebase.auth().onAuthStateChanged(user => {
       this.user = user || {};

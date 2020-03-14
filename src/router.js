@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Top from './components/Top.vue';
-import TaskEdit from './components/Task/Create.vue';
+import TasksCreate from './components/Tasks/Create.vue';
 
 Vue.use(Router);
 
@@ -15,9 +15,9 @@ export default new Router({
       component: Top
     },
     {
-      path: '/task/create',
-      name: 'taskCreate',
-      component: TaskEdit
+      path: '/tasks/create',
+      name: 'tasksCreate',
+      component: TasksCreate
     }
   ]
 });

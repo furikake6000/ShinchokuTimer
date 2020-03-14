@@ -1,12 +1,9 @@
 <template>
   <div id="topMenu">
     <div v-if="user.uid">
-      <a href="/task/create" class="blockbtn btn-primary">
+      <router-link to="/tasks/create" class="blockbtn btn-primary">
         <p class="text-large">やること登録</p>
-      </a>
-      <a class="blockbtn btn-primary">
-        <p class="text-large">やること実行</p>
-      </a>
+      </router-link>
       <a class="blockbtn">
         <p class="text-medium">記録を見る</p>
       </a>
