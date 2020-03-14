@@ -4,6 +4,9 @@
       <router-link to="/tasks/create" class="blockbtn btn-primary">
         <p class="text-large">やること登録</p>
       </router-link>
+      <router-link to="/tasks" class="blockbtn btn-primary">
+        <p class="text-large">やること一覧</p>
+      </router-link>
       <a class="blockbtn">
         <p class="text-medium">記録を見る</p>
       </a>
