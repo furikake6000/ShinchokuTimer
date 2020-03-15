@@ -1,15 +1,25 @@
 <template>
   <div id="timer">
-    <div class="bar" :style="`clip-path: inset(0 ${timeNormalized * 100}% 0 0)`">
+    <div class="display">
+      <div class="bar" :style="`clip-path: inset(0 ${timeNormalized * 100}% 0 0)`">
+        <div class="name">{{ task.name }}</div>
+        <div class="time">
+          <span>{{ timerMinuteStr }}:{{ timerSecondStr }}</span>
+        </div>
+      </div>
       <div class="name">{{ task.name }}</div>
       <div class="time">
         <span>{{ timerMinuteStr }}:{{ timerSecondStr }}</span>
       </div>
     </div>
-    <div class="name">{{ task.name }}</div>
-    <div class="time">
-      <span>{{ timerMinuteStr }}:{{ timerSecondStr }}</span>
-    </div>
+    <a @click="start()" class="blockbtn btn-primary" v-if="!timerObj">
+      <p class="text-large">はじめる</p>
+      <p class="text-desc">ここをタップしてタイマーを起動</p>
+    </a>
+    <a @click="stop()" class="blockbtn btn-danger" v-else>
+      <p class="text-large">おわる</p>
+      <p class="text-desc">まだ目標を達成していないが記録する</p>
+    </a>
   </div>
 </template>
 
@@ -42,43 +52,29 @@
       update: function() {
         this.nowDate = moment();
       },
-
       start: function() {
         if (this.timerObj) return;
 
         this.nowDate = moment();
         this.timerEndDate = moment().add(this.remainTime);
-        this.timerObj = setInterval(function() {this.update()}.bind(this), 100);
+        this.timerObj = setInterval(function() {this.update();}.bind(this), 100);
+        this.$parent.isTimerRunning = true;
       },
-
       stop: function() {
         if (!this.timerObj) return;
 
         this.remainTime = this.timerEndDate.diff(this.nowDate);
         clearInterval(this.timerObj);
         this.timerObj = null;
+        this.$parent.isTimerRunning = false;
       },
-
       initialize: function(limit) {
         this.stop();
         this.remainTime = (limit || this.defaultLimit); // milliseconds
         this.defaultLimit = this.remainTime;
       },
+      deleteTask: function() {
 
-      setMinute: function(minutes) {
-        this.stop();
-        var currentCount = moment(this.remainTime);
-        currentCount.set('day', moment(0).get('day'));
-        currentCount.set('hour', moment(0).get('hour'));
-        currentCount.set('minute', Math.min(parseInt(minutes,10), 999));
-        this.initialize(currentCount.valueOf());
-      },
-
-      setSecond: function(seconds) {
-        this.stop();
-        var currentCount = moment(this.remainTime);
-        currentCount.set('second', parseInt(seconds, 10));
-        this.initialize(currentCount.valueOf());
       }
     },
     computed: {
@@ -113,27 +109,36 @@
   #timer
     display: flex
     flex-direction: column
-    justify-content: center
-    background-color: #C2EFB5
-    color: #137717
 
-    .name
-      font-size: 2.25rem
-      font-weight: bold
+    .display
+      display: flex
+      position: relative
+      flex: 1
+      flex-direction: column
+      justify-content: center
+      background-color: #C2EFB5
+      color: #137717
 
-    .time
-      font-size: 6rem
-      font-weight: bold
-      span
-        position: relative
+      .name
+        font-size: 2.25rem
+        font-weight: bold
 
-    .bar
-      position: absolute
-      z-index: 10
-      background-color: #137717
-      left: 0
-      width: 100%
-      height: 100%
-      .name, .time
-        color: white
+      .time
+        font-size: 6rem
+        font-weight: bold
+        span
+          position: relative
+
+      .bar
+        display: flex
+        flex-direction: column
+        justify-content: center
+        position: absolute
+        z-index: 10
+        background-color: #137717
+        left: 0
+        width: 100%
+        height: 100%
+        .name, .time
+          color: white
 </style>

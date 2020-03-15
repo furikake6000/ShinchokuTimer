@@ -1,11 +1,7 @@
 <template>
   <div id="tasksShow">
     <Timer :task="task"/>
-    <a class="blockbtn btn-primary">
-      <p class="text-large">はじめる</p>
-      <p class="text-desc">ここをタップしてタイマーを起動</p>
-    </a>
-    <a class="blockbtn btn-danger">
+    <a @click="deleteTask()" class="blockbtn btn-danger" v-if="!isTimerRunning">
       <p class="text-medium">予定を削除</p>
     </a>
     <router-link to="/tasks" class="blockbtn">
@@ -35,7 +31,8 @@ export default {
   },
   data() {
     return {
-      task: {}
+      task: {},
+      isTimerRunning: false
     };
   },
   methods: {
