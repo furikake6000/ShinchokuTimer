@@ -1,6 +1,6 @@
 <template>
   <div id="tasksShow">
-    <template v-if="!isResultEnabled">
+    <div class="timer-area" v-if="!isResultEnabled">
       <Timer :task="task"/>
       <a @click="deleteTask()" class="blockbtn btn-danger" v-if="!isTimerRunning">
         <p class="text-medium">予定を削除</p>
@@ -8,8 +8,8 @@
       <router-link to="/tasks" class="blockbtn">
         <p class="text-medium">戻る</p>
       </router-link>
-    </template>
-    <TasksResult v-else :task="task" />
+    </div>
+    <TasksResult v-else :task="task" :elapsedTime="elapsedTime" />
   </div>
 </template>
 
@@ -38,7 +38,8 @@ export default {
     return {
       task: {},
       isTimerRunning: false,
-      isResultEnabled: false
+      isResultEnabled: false,
+      elapsedTime: 0
     };
   },
   methods: {
@@ -55,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-#tasksShow
+.timer-area
   position: absolute
   top: 10%
   left: 0

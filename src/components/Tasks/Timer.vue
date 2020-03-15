@@ -76,6 +76,7 @@
       },
       stopAndResult: function() {
         stop();
+        this.$parent.elapsedTime = this.task.period - parseInt(this.time / 1000);
         this.$parent.isResultEnabled = true;
       },
       initialize: function(limit) {
