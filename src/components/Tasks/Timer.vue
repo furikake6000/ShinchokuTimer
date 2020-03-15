@@ -48,7 +48,7 @@
     },
     watch: {
       task: function(task) {
-        this.initialize(task.period * 60 * 1000);
+        this.initialize(task.period * 1000);
       }
     },
     updated: function() {

@@ -6,7 +6,7 @@
         <template v-for="(task, taskId) in tasks">
           <router-link :to="`/tasks/${taskId}`" class="task" :key="task.createdAt">
             <p class="text-large">{{ task.name }}</p>
-            <p class="text-medium">{{ minutesIntToStr(task.period) }}</p>
+            <p class="text-medium">{{ secondsIntToStr(task.period) }}</p>
           </router-link>
         </template>
       </template>
@@ -46,9 +46,9 @@ export default {
     };
   },
   methods: {
-    minutesIntToStr(minutes) {
-      minutes = parseInt(minutes);
-      return (minutes >= 60 ? `${minutes / 60}時間` : '') + (minutes % 60 ? `${minutes % 60}分` : '');
+    secondsIntToStr(seconds) {
+      let minutes = parseInt(seconds / 60);
+      return (minutes >= 60 ? `${parseInt(minutes / 60)}時間` : '') + (minutes % 60 ? `${minutes % 60}分` : '');
     }
   }
 };

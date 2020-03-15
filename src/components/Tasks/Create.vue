@@ -9,14 +9,15 @@
           <input type="text" name="name" v-model="name" placeholder="絵を描く / 筋トレ etc...">
           <p>に</p>
           <select name="period" v-model="period">
-            <option value="1">1分間</option>
-            <option value="5">5分間</option>
-            <option value="10">10分間</option>
-            <option value="15">15分間</option>
-            <option value="30">30分間</option>
-            <option value="60">1時間</option>
-            <option value="120">2時間</option>
-            <option value="180">3時間</option>
+            <option value="60">1分間</option>
+            <option value="300">5分間</option>
+            <option value="600">10分間</option>
+            <option value="900">15分間</option>
+            <option value="1800">30分間</option>
+            <option value="3600">1時間</option>
+            <option value="5400">1時間30分</option>
+            <option value="7200">2時間</option>
+            <option value="10800">3時間</option>
           </select>
           <p>取り組みます。</p>
         </div>
@@ -51,7 +52,7 @@ export default {
     return {
       user: {},
       name: '',
-      period: 30
+      period: 1800
     };
   },
   methods: {
