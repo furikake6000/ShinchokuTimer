@@ -17,11 +17,11 @@
       <p class="text-desc">ここをタップしてタイマーを起動</p>
     </a>
     <template v-else>
-      <a @click="stop()" class="blockbtn btn-primary" v-if="timerFinished">
+      <a @click="stopAndResult()" class="blockbtn btn-primary" v-if="timerFinished">
         <p class="text-large">おわる</p>
         <p class="text-desc">記録する</p>
       </a>
-      <a @click="stop()" class="blockbtn btn-danger" v-else>
+      <a @click="stopAndResult()" class="blockbtn btn-danger" v-else>
         <p class="text-large">おわる</p>
         <p class="text-desc">まだ目標を達成していないが記録する</p>
       </a>
@@ -74,13 +74,14 @@
         this.timerObj = null;
         this.$parent.isTimerRunning = false;
       },
+      stopAndResult: function() {
+        stop();
+        this.$parent.isResultEnabled = true;
+      },
       initialize: function(limit) {
         this.stop();
         this.remainTime = (limit || this.defaultLimit); // milliseconds
         this.defaultLimit = this.remainTime;
-      },
-      deleteTask: function() {
-
       }
     },
     computed: {
