@@ -1,7 +1,7 @@
 <template>
   <div id="timer">
     <div class="display">
-      <div class="bar" :style="`clip-path: inset(0 ${timeNormalized * 100}% 0 0)`">
+      <div class="bar" :class="{ finished : timerFinished }" :style="`clip-path: inset(0 ${timeNormalized * 100}% 0 0)`">
         <div class="name">{{ task.name }}</div>
         <div class="time">
           <span>{{ timerMinuteStr }}:{{ timerSecondStr }}</span>
@@ -16,10 +16,16 @@
       <p class="text-large">はじめる</p>
       <p class="text-desc">ここをタップしてタイマーを起動</p>
     </a>
-    <a @click="stop()" class="blockbtn btn-danger" v-else>
-      <p class="text-large">おわる</p>
-      <p class="text-desc">まだ目標を達成していないが記録する</p>
-    </a>
+    <template v-else>
+      <a @click="stop()" class="blockbtn btn-primary" v-if="timerFinished">
+        <p class="text-large">おわる</p>
+        <p class="text-desc">記録する</p>
+      </a>
+      <a @click="stop()" class="blockbtn btn-danger" v-else>
+        <p class="text-large">おわる</p>
+        <p class="text-desc">まだ目標を達成していないが記録する</p>
+      </a>
+    </template>
   </div>
 </template>
 
@@ -63,7 +69,7 @@
       stop: function() {
         if (!this.timerObj) return;
 
-        this.remainTime = this.timerEndDate.diff(this.nowDate);
+        this.remainTime = this.time;
         clearInterval(this.timerObj);
         this.timerObj = null;
         this.$parent.isTimerRunning = false;
@@ -80,25 +86,25 @@
     computed: {
       time: function() {
         if (this.timerObj){
-          if (this.nowDate.isAfter(this.timerEndDate)) {
-            return 0;
-          }
           return this.timerEndDate.diff(this.nowDate);
         }else{
-          return Math.max(this.remainTime, 0);
+          return this.remainTime;
         }
       },
       timeStr: function() {
         return this.timerMinuteStr + ':' + this.timerSecondStr;
       },
       timerMinuteStr: function() {
-        return Math.floor(moment(this.time).valueOf() / 60000);
+        return (this.time >= 0 ? '' : '-') + Math.floor(moment(Math.abs(this.time)).valueOf() / 60000);
       },
       timerSecondStr: function() {
-        return ('00' + moment(this.time).second()).slice(-2);
+        return ('00' + moment(Math.abs(this.time)).second()).slice(-2);
       },
       timeNormalized: function() {
         return this.time / this.defaultLimit;
+      },
+      timerFinished: function() {
+        return this.time < 0;
       }
     },
   };
@@ -139,6 +145,10 @@
         left: 0
         width: 100%
         height: 100%
+
+        &.finished
+          background-color: #E74747
+
         .name, .time
           color: white
 </style>

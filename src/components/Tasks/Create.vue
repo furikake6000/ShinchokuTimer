@@ -9,6 +9,7 @@
           <input type="text" name="name" v-model="name" placeholder="絵を描く / 筋トレ etc...">
           <p>に</p>
           <select name="period" v-model="period">
+            <option value="1">1分間</option>
             <option value="5">5分間</option>
             <option value="10">10分間</option>
             <option value="15">15分間</option>
