@@ -3,10 +3,12 @@
     <h1>やること一覧</h1>
     <div class="tasks">
       <template v-if="Object.keys(tasks).length">
-        <div class="task" v-for="task in tasks" :key="task.createdAt">
-          <p class="text-large">{{ task.name }}</p>
-          <p class="text-medium">{{ minutesIntToStr(task.period) }}</p>
-        </div>
+        <template v-for="(task, taskId) in tasks">
+          <router-link :to="`/tasks/${taskId}`" class="task" :key="task.createdAt">
+            <p class="text-large">{{ task.name }}</p>
+            <p class="text-medium">{{ minutesIntToStr(task.period) }}</p>
+          </router-link>
+        </template>
       </template>
       <template v-else>
         <p class="text-large">完了！</p>
