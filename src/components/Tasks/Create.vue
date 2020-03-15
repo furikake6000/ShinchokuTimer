@@ -45,7 +45,11 @@ export default {
   name: 'TasksCreate',
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      this.user = user || {};
+      if (user) {
+        this.user = user || {};
+      } else {
+        this.$router.push('/');
+      }
     });
   },
   data() {

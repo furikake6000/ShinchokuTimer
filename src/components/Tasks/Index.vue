@@ -33,11 +33,15 @@ export default {
   created() {
     let _this = this;
     firebase.auth().onAuthStateChanged(user => {
-      this.user = user || {};
-      this.tasksRef = firebase.database().ref(`users/${this.user.uid}/tasks`);
-      this.tasksRef.on('value', function(tasks) {
-        _this.tasks = tasks.val();
-      });
+      if (user) {
+        this.user = user || {};
+        this.tasksRef = firebase.database().ref(`users/${this.user.uid}/tasks`);
+        this.tasksRef.on('value', function(tasks) {
+          _this.tasks = tasks.val();
+        });
+      } else {
+        this.$router.push('/');
+      }
     });
   },
   data() {
