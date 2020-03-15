@@ -7,9 +7,9 @@
       <router-link to="/tasks" class="blockbtn btn-primary">
         <p class="text-large">やること一覧</p>
       </router-link>
-      <a class="blockbtn">
+      <router-link :to="`/users/${this.user.uid}/history`" class="blockbtn">
         <p class="text-medium">記録を見る</p>
-      </a>
+      </router-link>
       <a @click="logout" class="blockbtn">
         <p class="text-medium">ログアウト</p>
       </a>

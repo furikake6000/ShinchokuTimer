@@ -4,6 +4,7 @@ import Top from './components/Top.vue';
 import TasksCreate from './components/Tasks/Create.vue';
 import TasksIndex from './components/Tasks/Index.vue';
 import TasksShow from './components/Tasks/Show.vue';
+import History from './components/History.vue';
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/tasks/:id',
       name: 'tasksShow',
       component: TasksShow
+    },
+    {
+      path: '/users/:id/history',
+      name: 'history',
+      component: History
     }
   ]
 });
