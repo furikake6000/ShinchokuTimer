@@ -27,7 +27,7 @@
         <p class="text-large">今すぐやる</p>
         <p class="text-desc">ここをタップしてタイマーを起動</p>
       </a>
-      <a @click="postTaskAndGotoTop()" class="blockbtn btn-primary">
+      <a @click="postTaskAndGotoIndex()" class="blockbtn btn-primary">
         <p class="text-large">帰ったらやる</p>
         <p class="text-desc">ここをタップして予定を登録</p>
       </a>
@@ -60,9 +60,9 @@ export default {
     };
   },
   methods: {
-    postTaskAndGotoTop() {
+    postTaskAndGotoIndex() {
       this.postTask();
-      this.$router.push('/');
+      this.$router.push('/tasks');
     },
     postTaskAndShow() {
       let taskRef = this.postTask();
