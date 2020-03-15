@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <a class="blockbtn btn-primary">
+      <a @click="postTaskAndShow()" class="blockbtn btn-primary">
         <p class="text-large">今すぐやる</p>
         <p class="text-desc">ここをタップしてタイマーを起動</p>
       </a>
@@ -64,14 +64,19 @@ export default {
       this.postTask();
       this.$router.push('/');
     },
+    postTaskAndShow() {
+      let taskRef = this.postTask();
+      this.$router.push(taskRef.key);
+    },
     postTask() {
-      if(this.name.length){
-        firebase.database().ref(`users/${this.user.uid}/tasks`).push({
-          name: this.name,
-          period: this.period,
-          createdAt: Date.now()
-        });
+      if(this.name.length == 0){
+        return null;
       }
+      return firebase.database().ref(`users/${this.user.uid}/tasks`).push({
+        name: this.name,
+        period: this.period,
+        createdAt: Date.now()
+      });
     }
   }
 };
